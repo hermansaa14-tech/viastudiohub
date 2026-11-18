@@ -2,7 +2,7 @@
 
 /* ================= CONFIGURACIÓN ================= */
 /* Número de WhatsApp de Viastudiohub (código de país + número, solo dígitos). */
-const VSH_WHATSAPP = "59100000000";
+const VSH_WHATSAPP = "59169789641";
 /* Medición: pegar los ID cuando existan. Vacíos = no se carga nada. */
 const VSH_META_PIXEL_ID = "";   // ej. "123456789012345"
 const VSH_GA4_ID = "";          // ej. "G-XXXXXXXXXX"
