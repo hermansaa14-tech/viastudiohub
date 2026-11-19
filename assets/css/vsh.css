@@ -2131,3 +2131,16 @@ body.ag-abierta { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) { .agenda[open] { animation: none; } }
 .agenda [hidden] { display: none !important; }
+
+/* Botón "Agendar llamada" de la cabecera (Diagnóstico) */
+.boton-agenda { display: inline-flex; align-items: center; gap: 10px; font: inherit; color: #fff; background: var(--tinta); border: 0; border-radius: 999px; padding: 6px 18px 6px 6px; cursor: pointer; box-shadow: 0 10px 22px -14px rgba(15, 40, 50, .8); transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.boton-agenda:hover { transform: translateY(-1px); background: var(--selva); box-shadow: 0 14px 26px -14px rgba(15, 40, 50, .8); }
+.boton-agenda:focus-visible { outline: 3px solid var(--tajibo); outline-offset: 3px; }
+.ba-ico { width: 38px; height: 38px; border-radius: 50%; background: var(--tajibo); color: var(--tinta); display: grid; place-items: center; flex: none; }
+.ba-ico .i-cal { width: 19px; height: 19px; }
+.ba-txt { display: grid; text-align: left; line-height: 1.15; }
+.ba-txt b { font-size: .95rem; }
+.ba-txt small { font-size: .74rem; color: #b9d0d6; font-weight: 500; }
+@media (max-width: 600px) { .ba-txt small { display: none; } .boton-agenda { padding-right: 14px; } .ba-ico { width: 32px; height: 32px; } }
+/* Subtítulo de la hero siempre centrado */
+.hero2 .hero2-sub { display: block; text-align: center; margin-left: auto; margin-right: auto; }
