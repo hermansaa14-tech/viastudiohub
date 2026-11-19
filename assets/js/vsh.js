@@ -7,6 +7,24 @@ const VSH_WHATSAPP = "59169789641";
 const VSH_META_PIXEL_ID = "";   // ej. "123456789012345"
 const VSH_GA4_ID = "";          // ej. "G-XXXXXXXXXX"
 /* Redes sociales: pegar la dirección completa de cada perfil. Si queda vacía, el ícono no se muestra. */
+/* Agenda de llamadas (landing Diagnóstico).
+   - webhook: URL del "Custom webhook" de Make. Si está vacío, la solicitud se envía
+     abriendo WhatsApp con el mensaje ya escrito (el cliente solo toca "Enviar").
+   - horarios en hora de Bolivia; 0 = domingo … 6 = sábado. */
+const VSH_AGENDA = {
+  webhook: "",
+  zona: "America/La_Paz",
+  dias: 12,
+  horarios: {
+    1: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"],
+    2: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"],
+    3: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"],
+    4: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"],
+    5: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"],
+    6: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30"],
+  },
+};
+
 const VSH_REDES = {
   instagram: "https://www.instagram.com/viastudiohub",   // confirmar
   facebook: "https://www.facebook.com/viastudiohub",     // confirmar
@@ -667,4 +685,123 @@ document.querySelectorAll("[data-red]").forEach(function (enlace) {
   calc.addEventListener("input", calcular);
   calc.addEventListener("change", calcular);
   calcular();
+})();
+
+
+/* 15. Agenda de llamadas: el visitante elige día y hora (de Bolivia), deja sus datos y una
+       nota. Se envía al webhook de Make (que la guarda y te avisa por WhatsApp). Si no hay
+       webhook, o falla, se abre WhatsApp con la solicitud escrita. Es una SOLICITUD: la
+       hora se confirma después por WhatsApp. */
+(function () {
+  const dlg = document.getElementById("agenda");
+  if (!dlg) return;
+  const form = dlg.querySelector(".ag-form"), listo = dlg.querySelector(".ag-listo");
+  const diasEl = dlg.querySelector(".ag-dias"), horasEl = dlg.querySelector(".ag-horas");
+  const resumen = dlg.querySelector(".ag-resumen"), error = dlg.querySelector(".ag-error");
+  const enviar = dlg.querySelector(".ag-enviar");
+  const C = VSH_AGENDA;
+  let dia = null, hora = null;
+
+  // Fecha de hoy en Bolivia (no en la zona del visitante)
+  function hoyBolivia() {
+    const p = new Intl.DateTimeFormat("en-CA", { timeZone: C.zona, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+    const [y, m, d] = p.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d));
+  }
+  const fmtDia = new Intl.DateTimeFormat("es-BO", { weekday: "short", timeZone: "UTC" });
+  const fmtNum = new Intl.DateTimeFormat("es-BO", { day: "numeric", month: "short", timeZone: "UTC" });
+  const fmtLargo = new Intl.DateTimeFormat("es-BO", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+  const iso = function (d) { return d.toISOString().slice(0, 10); };
+
+  function pintarDias() {
+    diasEl.innerHTML = "";
+    const base = hoyBolivia();
+    let n = 0;
+    for (let k = 1; n < C.dias && k < 40; k++) {     // desde mañana
+      const d = new Date(base.getTime() + k * 864e5);
+      if (!C.horarios[d.getUTCDay()]) continue;
+      n++;
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "ag-dia"; b.setAttribute("role", "radio"); b.setAttribute("aria-checked", "false");
+      b.dataset.fecha = iso(d); b.dataset.dow = d.getUTCDay(); b.dataset.largo = fmtLargo.format(d);
+      b.innerHTML = "<small>" + fmtDia.format(d).replace(".", "") + "</small><b>" + d.getUTCDate() + "</b><small>" + fmtNum.format(d).split(" ").slice(1).join(" ").replace(".", "") + "</small>";
+      b.addEventListener("click", function () { elegirDia(b); });
+      diasEl.appendChild(b);
+    }
+  }
+  function elegirDia(b) {
+    dia = b; hora = null;
+    diasEl.querySelectorAll(".ag-dia").forEach(function (x) { const si = x === b; x.classList.toggle("activo", si); x.setAttribute("aria-checked", si ? "true" : "false"); });
+    horasEl.innerHTML = "";
+    C.horarios[b.dataset.dow].forEach(function (h) {
+      const t = document.createElement("button");
+      t.type = "button"; t.className = "ag-hora"; t.textContent = h; t.setAttribute("role", "radio"); t.setAttribute("aria-checked", "false");
+      t.addEventListener("click", function () {
+        hora = h;
+        horasEl.querySelectorAll(".ag-hora").forEach(function (x) { const si = x === t; x.classList.toggle("activo", si); x.setAttribute("aria-checked", si ? "true" : "false"); });
+        actualizar();
+      });
+      horasEl.appendChild(t);
+    });
+    actualizar();
+  }
+  function actualizar() {
+    resumen.textContent = dia ? (dia.dataset.largo + (hora ? " · " + hora + " (hora de Bolivia)" : " · elige la hora")) : "Elige día y hora.";
+    resumen.classList.toggle("ok", !!(dia && hora));
+  }
+  function abrir() {
+    error.hidden = true; form.hidden = false; listo.hidden = true;
+    if (!diasEl.children.length) pintarDias();
+    const rubro = document.getElementById("dq-campo");
+    const r = dlg.querySelector("#ag-rubro");
+    if (rubro && rubro.value && !r.value) r.value = rubro.value;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+    document.body.classList.add("ag-abierta");
+  }
+  function cerrar() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+  dlg.addEventListener("close", function () { document.body.classList.remove("ag-abierta"); });
+  document.querySelectorAll("[data-agenda]").forEach(function (b) { b.addEventListener("click", function (e) { e.preventDefault(); abrir(); }); });
+  dlg.querySelectorAll("[data-cerrar]").forEach(function (b) { b.addEventListener("click", cerrar); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) cerrar(); });   // clic fuera de la ventana
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const f = new FormData(form);
+    const nombre = (f.get("nombre") || "").trim(), tel = (f.get("telefono") || "").trim();
+    let falta = "";
+    if (!dia) falta = "Elige un día.";
+    else if (!hora) falta = "Elige una hora.";
+    else if (!nombre) falta = "Escribe tu nombre.";
+    else if (tel.replace(/\D/g, "").length < 7) falta = "Escribe tu número de WhatsApp.";
+    if (falta) { error.textContent = falta; error.hidden = false; return; }
+    error.hidden = true;
+    const datos = {
+      fecha: dia.dataset.fecha, hora: hora, zona: "Bolivia (UTC-4)", dia_texto: dia.dataset.largo,
+      nombre: nombre, telefono: tel, rubro: (f.get("rubro") || "").trim(), nota: (f.get("nota") || "").trim(),
+      pagina: location.pathname, enviado: new Date().toISOString(),
+    };
+    const texto = "Hola, quiero agendar una llamada de diagnóstico.\n" +
+      "📅 " + datos.dia_texto + " a las " + datos.hora + " (hora de Bolivia)\n" +
+      "👤 " + datos.nombre + " · " + datos.telefono +
+      (datos.rubro ? "\n💼 " + datos.rubro : "") + (datos.nota ? "\n📝 " + datos.nota : "");
+    function terminado() {
+      form.hidden = true; listo.hidden = false;
+      listo.querySelector(".ag-listo-txt").textContent = "Pediste una llamada para el " + datos.dia_texto + " a las " + datos.hora + " (hora de Bolivia).";
+      if (window.fbq) fbq("track", "Schedule");
+      if (window.gtag) gtag("event", "agenda_enviada");
+    }
+    function porWhatsApp() {
+      const url = "https://wa.me/" + VSH_WHATSAPP + "?text=" + encodeURIComponent(texto);
+      terminado();
+      const v = window.open(url, "_blank");
+      if (!v) location.href = url;   // si el navegador bloquea la ventana nueva
+    }
+    if (!C.webhook) { porWhatsApp(); return; }
+    enviar.disabled = true; enviar.textContent = "Enviando…";
+    // Formulario simple (sin JSON) para que el navegador no bloquee el envío a Make
+    fetch(C.webhook, { method: "POST", mode: "no-cors", body: new URLSearchParams(datos) })
+      .then(terminado)
+      .catch(porWhatsApp)
+      .finally(function () { enviar.disabled = false; enviar.textContent = "Enviar solicitud"; });
+  });
 })();

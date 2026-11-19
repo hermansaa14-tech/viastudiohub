@@ -22,7 +22,7 @@
 <header class="cabecera">
   <div class="contenedor">
     <a class="marca" href="https://viastudiohub.com/">viastudiohub<span>.</span></a>
-    <a class="boton" href="#" data-wa="Hola, quiero saber qué tareas de mi trabajo se pueden automatizar.">Agendar llamada</a>
+    <button type="button" class="boton" data-agenda><svg class="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Agendar llamada</button>
   </div>
 </header>
 
@@ -31,6 +31,7 @@
     <div class="contenedor">
       <p class="hero2-ante">Automatización e IA para tu trabajo</p>
       <h1>¿Cuánto de tu trabajo es repetir lo mismo?</h1>
+      <p class="hero2-sub">Encontramos qué tareas de tu trabajo pueden hacerse solas y las ponemos en marcha. Diagnóstico sin costo.</p>
       <figure class="video-marco hero-video" id="video">
         <button type="button" class="video-portada" data-src="../assets/video/soluciones.mp4" data-poster="../assets/video/soluciones-poster.jpg" aria-label="Reproducir el video: Menos trabajo repetido, 1:16">
           <span class="video-rubros"><span>Profesionales</span><span>Tiendas</span><span>Almacenes</span></span>
@@ -485,7 +486,7 @@
         <h2 id="cierre-titulo">¿Qué tarea te gustaría no volver a hacer a mano?</h2>
         <p class="cierre-bajada">Cuéntanos a qué te dedicas por WhatsApp. Te proponemos una llamada de 30 minutos y te enviamos tu mapa de automatización.</p>
         <div class="cierre-accion">
-          <a class="boton boton-grande" href="#" data-wa="Hola, quiero saber qué tareas de mi trabajo se pueden automatizar."><svg class="wa-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>Escribir por WhatsApp</a>
+          <div class="cierre-botones"><a class="boton boton-grande" href="#" data-wa="Hola, quiero saber qué tareas de mi trabajo se pueden automatizar."><svg class="wa-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>Escribir por WhatsApp</a><button type="button" class="boton-sec boton-grande cierre-agenda" data-agenda><svg class="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Agendar una llamada</button></div>
           <ul class="cierre-garantias">
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>Llamada y mapa sin costo</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>Te respondemos en el día</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>Sin compromiso</li>
           </ul>
@@ -543,6 +544,46 @@
   <a class="wa-flotante" href="#" data-wa="Hola, quiero saber qué tareas de mi trabajo se pueden automatizar." aria-label="Hablar por WhatsApp"><svg class="wa-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg><span class="wa-etiqueta" aria-hidden="true">Hablar por WhatsApp</span></a>
 </div>
 
+<dialog class="agenda" id="agenda" aria-labelledby="agenda-titulo">
+  <form class="ag-form" novalidate>
+    <div class="ag-cab">
+      <div><p class="ag-ante">Diagnóstico sin costo · 30 minutos</p><h2 id="agenda-titulo">Agenda una llamada</h2></div>
+      <button type="button" class="ag-cerrar" data-cerrar aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="ag-cuerpo">
+      <fieldset class="ag-paso">
+        <legend><span>1</span> Elige el día</legend>
+        <div class="ag-dias" role="radiogroup" aria-label="Día"></div>
+      </fieldset>
+      <fieldset class="ag-paso">
+        <legend><span>2</span> Elige la hora <small>(hora de Bolivia)</small></legend>
+        <div class="ag-horas" role="radiogroup" aria-label="Hora"><p class="ag-vacio">Primero elige un día.</p></div>
+      </fieldset>
+      <fieldset class="ag-paso">
+        <legend><span>3</span> Cuéntanos un poco</legend>
+        <div class="ag-campos">
+          <label>Tu nombre<input name="nombre" id="ag-nombre" autocomplete="name" required maxlength="60"></label>
+          <label>Tu WhatsApp<input name="telefono" id="ag-telefono" type="tel" autocomplete="tel" inputmode="tel" placeholder="Ej.: 70012345" required maxlength="20"></label>
+          <label class="ag-ancho">¿A qué te dedicas?<input name="rubro" id="ag-rubro" maxlength="80" placeholder="Ej.: tengo un estudio contable"></label>
+          <label class="ag-ancho">¿En qué crees que te podemos ayudar?<textarea name="nota" id="ag-nota" rows="3" maxlength="600" placeholder="Ej.: paso horas pidiendo facturas a mis clientes y ordenándolas"></textarea></label>
+        </div>
+      </fieldset>
+      <p class="ag-error" role="alert" hidden></p>
+    </div>
+    <div class="ag-pie">
+      <p class="ag-resumen" aria-live="polite">Elige día y hora.</p>
+      <button type="submit" class="boton boton-grande ag-enviar">Enviar solicitud</button>
+    </div>
+    <p class="ag-legal">Usamos tus datos solo para contactarte por esta llamada. <a href="../privacidad/">Privacidad</a></p>
+  </form>
+  <div class="ag-listo" hidden>
+    <span class="ag-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg></span>
+    <h2>¡Solicitud enviada!</h2>
+    <p class="ag-listo-txt"></p>
+    <p>Te escribimos por WhatsApp para confirmar la hora.</p>
+    <button type="button" class="boton" data-cerrar>Listo</button>
+  </div>
+</dialog>
 <script src="../assets/js/vsh.js"></script>
 </body>
 </html>
